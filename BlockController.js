@@ -45,14 +45,16 @@ class BlockController {
         this.server.route({
             method: 'POST',
             path: '/api/block',
-            handler: (request, h) => {
-                blockchain.getBlockHeight()
+            handler: async (request, h) => {
+                const newBlock =  blockchain.getBlockHeight()
                 .then((height) =>{
                     let block = new BlockClass.Block(`Test Data #${height}`);
-                    blockchain.addBlock(block);
+                    return blockchain.addBlock(block);
+                }).then((savedBlock)=>{
+                    return savedBlock; //console.log(savedBlock);
                 });
                 
-                return 'New block added.'
+                return newBlock;
             }
         });
     }

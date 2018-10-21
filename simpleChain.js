@@ -34,7 +34,7 @@
       newBlock.time = new Date().getTime().toString().slice(0,-3);
 
           //get blockchain height
-          this.getBlockHeight()
+         return this.getBlockHeight()
           .then((height) =>{
           // Block height
           newBlock.height =  height + 1;
@@ -55,6 +55,8 @@
             // Save in leveldb
             levelSandbox.addDataToLevelDB(JSON.stringify(newBlock));
           }
+
+          return newBlock;
             
         }).catch((err)=>{
            console.log(err);
