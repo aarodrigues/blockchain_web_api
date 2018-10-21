@@ -16,7 +16,7 @@ class BlockController {
     constructor(server) {
         this.server = server;
         this.blocks = [];
-        this.initializeMockData();
+        this.initBlockChain();
         this.getBlockByIndex();
         this.postNewBlock();
     }
@@ -56,21 +56,12 @@ class BlockController {
     }
 
     /**
-     * Help method to inizialized Mock dataset, adds 10 test blocks to the blocks array
+     * Initializes blockchain object
      */
-    initializeMockData() {
-        blockchain = new BlockChainClass.Blockchain();
-        if(this.blocks.length === 0){
-            for (let index = 0; index < 10; index++) {
-                let blockAux = new BlockClass.Block(`Test Data #${index}`);
-                blockAux.height = index;
-                blockAux.hash = SHA256(JSON.stringify(blockAux)).toString();
-                this.blocks.push(blockAux);
-            }
-        }
+    initBlockChain() {
+        if(blockchain != "undefined")
+            blockchain = new BlockChainClass.Blockchain();
     }
-
-
 }
 
 /**

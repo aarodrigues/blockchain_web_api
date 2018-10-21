@@ -28,7 +28,7 @@ function addDataToLevelDB(value) {
         }).on('error', function(err) {
             return console.log('Unable to read data stream!', err)
         }).on('close', function() {
-          console.log('Block #' + i);
+          console.log('Block #' + i+' created.');
           addLevelDBData(i, value);
         });
 }
@@ -50,6 +50,7 @@ function getAllData() {
   return promisse;
 }
 
+// get last register on database
 function lastRegister(){
   let count = 0;
    return new Promise((resolve, reject) => {
@@ -59,27 +60,7 @@ function lastRegister(){
     }).on('error', function(err) {
         return console.log('Unable to read data stream!', err)
     }).on('end', function () {
-      console.log("number registers: "+count)
       resolve(getLevelDBData(count-1));
     });
   });
 }
-
-/* ===== Testing ==============================================================|
-|  - Self-invoking function to add blocks to chain                             |
-|  - Learn more:                                                               |
-|   https://scottiestech.info/2014/07/01/javascript-fun-looping-with-a-delay/  |
-|                                                                              |
-|  * 100 Milliseconds loop = 36,000 blocks per hour                            |
-|     (13.89 hours for 500,000 blocks)                                         |
-|    Bitcoin blockchain adds 8640 blocks per day                               |
-|     ( new block every 10 minutes )                                           |
-|  ===========================================================================*/
-
-
-// (function theLoop (i) {
-//   setTimeout(function () {
-//     addDataToLevelDB('Testing data');
-//     if (--i) theLoop(i);
-//   }, 100);
-// })(10);

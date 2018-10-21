@@ -23,55 +23,54 @@
         console.log('Blockchain loaded.');
       })
       .catch((err)=>{
-        console.log("First Block created.");
         this.addBlock(new BlockClass.Block("First block in the chain - Genesis block"));
       });
     }
 
-    // Add new block
-    addBlock(newBlock){
-      // UTC timestamp
-      newBlock.time = new Date().getTime().toString().slice(0,-3);
-
-          //get blockchain height
-         return this.getBlockHeight()
-          .then((height) =>{
-          // Block height
-          newBlock.height =  height + 1;
-            
-          if(newBlock.height>0){
-            //async fucntion to get previous block  
-            return levelSandbox.getLevelDBData(newBlock.height-1).then((value)=>{
-              // previous block hash
-              newBlock.previousBlockHash = JSON.parse(value).hash;
+      // Add new block
+      addBlock(newBlock){
+        // UTC timestamp
+        newBlock.time = new Date().getTime().toString().slice(0,-3);
+        //get blockchain height
+        return this.getBlockHeight()
+        .then((height) =>{
+            // Block height
+            newBlock.height =  height + 1;
+            if(newBlock.height>0){
+              //async fucntion to get previous block  
+              return levelSandbox.getLevelDBData(newBlock.height-1).then((value)=>{
+                // previous block hash
+                newBlock.previousBlockHash = JSON.parse(value).hash;
+                // Block hash with SHA256 using newBlock and converting to a string
+                newBlock.hash = SHA256(JSON.stringify(newBlock)).toString();
+                // Save in leveldb
+                levelSandbox.addDataToLevelDB(JSON.stringify(newBlock));
+                // return the block just added
+                return newBlock;
+              });
+            }else{
               // Block hash with SHA256 using newBlock and converting to a string
               newBlock.hash = SHA256(JSON.stringify(newBlock)).toString();
               // Save in leveldb
               levelSandbox.addDataToLevelDB(JSON.stringify(newBlock));
-              // return the block just added
-              return newBlock;
-            });
-          }else{
-            // Block hash with SHA256 using newBlock and converting to a string
-            newBlock.hash = SHA256(JSON.stringify(newBlock)).toString();
-            // Save in leveldb
-            levelSandbox.addDataToLevelDB(JSON.stringify(newBlock));
-          }
-
+            }
           return newBlock;
-            
         }).catch((err)=>{
-           console.log(err);
-         });
-    }
+            console.log(err);
+        });
+      }
 
-    // Get block height
+      // Get block height
       getBlockHeight(){
         return levelSandbox.lastRegister()
         .then((data)=>{return JSON.parse(data).height})
         .catch((err)=>{
-          console.log(err);
-          return -1;
+          if(err.message == "Key not found in database [-1]"){
+            console.log("Empty Database. First block created.");
+            return -1;
+          }
+          else
+            console.log(err);
         });
       }
 
