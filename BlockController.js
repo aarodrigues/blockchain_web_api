@@ -46,14 +46,12 @@ class BlockController {
             method: 'POST',
             path: '/api/block',
             handler: async (request, h) => {
+                const payload = request.payload
                 const newBlock =  blockchain.getBlockHeight()
                 .then((height) =>{
-                    let block = new BlockClass.Block(`Test Data #${height}`);
+                    let block = new BlockClass.Block(payload.body);
                     return blockchain.addBlock(block);
-                }).then((savedBlock)=>{
-                    return savedBlock; //console.log(savedBlock);
                 });
-                
                 return newBlock;
             }
         });
