@@ -47,11 +47,9 @@ class BlockController {
             path: '/api/block',
             handler: async (request, h) => {
                 const payload = request.payload
-                const newBlock =  blockchain.getBlockHeight()
-                .then((height) =>{
-                    let block = new BlockClass.Block(payload.body);
-                    return blockchain.addBlock(block);
-                });
+                if(payload.body == "") return "Erro, wasn't possible to create block.\n(Empty payload)";
+                let block = new BlockClass.Block(payload.body);
+                const newBlock = blockchain.addBlock(block);
                 return newBlock;
             }
         });
