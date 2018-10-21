@@ -41,14 +41,16 @@
             
           if(newBlock.height>0){
             //async fucntion to get previous block  
-            levelSandbox.getLevelDBData(newBlock.height-1).then((value)=>{
+            return levelSandbox.getLevelDBData(newBlock.height-1).then((value)=>{
               // previous block hash
               newBlock.previousBlockHash = JSON.parse(value).hash;
               // Block hash with SHA256 using newBlock and converting to a string
               newBlock.hash = SHA256(JSON.stringify(newBlock)).toString();
               // Save in leveldb
               levelSandbox.addDataToLevelDB(JSON.stringify(newBlock));
-            });  
+              // return the block just added
+              return newBlock;
+            });
           }else{
             // Block hash with SHA256 using newBlock and converting to a string
             newBlock.hash = SHA256(JSON.stringify(newBlock)).toString();
