@@ -61,7 +61,7 @@ Lauch application running:
 node app.js
 ```
 
-Use Curl or Postman to test the POST and GET application.
+Use Curl or Postman to test the POST and GET methods.
 
 ### POST
 
