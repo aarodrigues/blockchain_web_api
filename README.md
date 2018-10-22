@@ -65,7 +65,7 @@ Use Curl or Postman to test the POST and GET application.
 
 ### POST
 
-Create a block with data payload and add to the blockchain.
+Create a block with data payload and add to the blockchain using a key "body".
 
 ### GET 
 
