@@ -55,7 +55,21 @@ This will install all the packages needed to run the application.
 
 ## Usage
 
-Instructing to usage
+Lauch application running:
+
+```bash
+node app.js
+```
+
+Use Curl or Postman to test the POST and GET application.
+
+### POST
+
+Create a block with data payload and add to the blockchain.
+
+### GET 
+
+Get a block from the chain based on blockchain height.
 
 ## Built With
 
@@ -63,10 +77,6 @@ Instructing to usage
 * [hapi.js](https://hapijs.com/) - Javascript framework to build applications and services
 * [npm](https://www.npmjs.com/) - Node Package Manager
 * [leveldb](http://leveldb.org/) - Library for persistence
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Authors
 
