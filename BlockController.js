@@ -27,7 +27,7 @@ class BlockController {
     getBlockByIndex() {
         this.server.route({
             method: 'GET',
-            path: '/api/block/{index}',
+            path: '/block/{index}',
             handler: async (request, h) => {
              const block = await  blockchain.getBlock(encodeURIComponent(request.params.index))
                 .then((value)=>{
@@ -44,7 +44,7 @@ class BlockController {
     postNewBlock() {
         this.server.route({
             method: 'POST',
-            path: '/api/block',
+            path: '/block',
             handler: async (request, h) => {
                 const payload = request.payload
                 if(payload.body == "") return "Erro, wasn't possible to create block.\n(Empty payload)";

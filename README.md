@@ -65,11 +65,35 @@ Use Curl or Postman to test the POST and GET methods.
 
 ### POST
 
-Create a block with data payload and add to the blockchain using a key "body".
+Create a block with data payload and add to the blockchain using a key "body". The block can be created send a request to url http://localhost:8000/block.  
+It should return the following response after create a new block:
+
+```
+{
+    "hash": "e3f020e2cda598fc6f8635f6c4261e244fa819dbc21c783432e3ba09853382ee",
+    "height": 1,
+    "body": "Payload informed",
+    "time": "1540262814",
+    "previousBlockHash": "50a010fcdb3eb08056565191c0306b076ecd8818d6bf584344369bb1c30e79a4"
+}
+```
 
 ### GET 
 
-Get a block from the chain based on blockchain height.
+Get a block from the chain based on blockchain height. The block can be retrieved send a request to url http://localhost:8000/block/{height}, where height is the block height on the chain.  
+It should return a json from database with a following format:  
+( Response from http://localhost:8000/block/0 )
+
+```
+{
+    "hash": "50a010fcdb3eb08056565191c0306b076ecd8818d6bf584344369bb1c30e79a4",
+    "height": 0,
+    "body": "First block in the chain - Genesis block",
+    "time": "1540262777",
+    "previousBlockHash": ""
+}
+```
+
 
 ## Built With
 
